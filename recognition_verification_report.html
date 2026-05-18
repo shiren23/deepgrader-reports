@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+<title>识别结果核实报告</title><style>
+*{box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;margin:0;padding:20px 40px;background:#f0f2f5;color:#333}
+h1{text-align:center;color:#1a1a2e;font-size:26px;margin-bottom:6px}
+.sub{text-align:center;color:#888;margin-bottom:24px;font-size:14px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:28px}
+.card{background:#fff;border-radius:12px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.card h3{margin:0 0 6px;font-size:13px;color:#666}
+.card .big{font-size:30px;font-weight:700}
+.green{color:#16a34a} .red{color:#dc2626} .blue{color:#2563eb} .orange{color:#ea580c}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:28px;font-size:13px}
+th{background:#1e293b;color:#fff;padding:10px 8px;text-align:left;font-size:12px;white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top;line-height:1.5}
+tr:hover{background:#f8fafc}
+.subj td{background:#eff6ff;font-weight:600;color:#1e40af;font-size:14px}
+.tag-true{display:inline-block;background:#dcfce7;color:#15803d;padding:2px 10px;border-radius:4px;font-weight:600;font-size:12px}
+.tag-false{display:inline-block;background:#fee2e2;color:#b91c1c;padding:2px 10px;border-radius:4px;font-weight:600;font-size:12px}
+.tag-na{display:inline-block;background:#f3f4f6;color:#9ca3af;padding:2px 10px;border-radius:4px;font-size:12px}
+.note{background:#fffbeb;border:1px solid #fbbf24;border-radius:8px;padding:14px;margin-top:20px;font-size:13px;color:#92400e}
+</style></head><body>
+<h1>识别结果核实报告</h1>
+<p class="sub">批次 20260518-101613 &middot; 执行模式: 先识别不判分 &middot; 模型: qwen3.5-plus &middot; 修复重试: 开</p>
+
+<div class="cards">
+<div class="card"><h3>总题数</h3><div class="big blue">20</div></div>
+<div class="card"><h3>识别匹配</h3><div class="big green">14</div><div>匹配率: <b>70.0%</b></div></div>
+<div class="card"><h3>识别不匹配</h3><div class="big red">3</div><div>OCR 答案有偏差</div></div>
+<div class="card"><h3>识别失败 (unreadable)</h3><div class="big orange">3</div><div>模型无法读取</div></div>
+</div>
+<h2>分学科统计</h2><table><tr><th>学科</th><th>总题</th><th>匹配</th><th>不匹配</th><th>失败</th><th>匹配率</th></tr>
+<tr><td><b>高中数学</b></td><td>10</td><td class='green'>7</td><td class='red'>1</td><td class='orange'>2</td><td><b>70.0%</b></td></tr>
+<tr><td><b>初中数学</b></td><td>10</td><td class='green'>7</td><td class='red'>2</td><td class='orange'>1</td><td><b>70.0%</b></td></tr>
+</table>
+<h2>逐题对比</h2><table><tr><th>#</th><th>学科</th><th>题号</th><th>CSV 标准答案</th><th>CSV 真值</th><th>系统识别答案</th><th>识别结果</th><th>备注</th></tr>
+<tr class="subj"><td colspan="8">高中数学</td></tr>
+<tr><td>1</td><td>高中数学</td><td>Q1</td>
+<td>AC</td><td><span class="tag-true">对</span></td>
+<td>AC</td><td><span class="tag-true">匹配</span></td><td style='font-size:12px;color:#888'></td></tr>
+<tr><td>2</td><td>高中数学</td><td>Q2</td>
+<td>A</td><td><span class="tag-true">对</span></td>
+<td>A</td><td><span class="tag-true">匹配</span></td><td style='font-size:12px;color:#888'></td></tr>
+<tr><td>3</td><td>高中数学</td><td>Q3</td>
+<td>C</td><td><span class="tag-true">对</span></td>
+<td>C</td><td><span class="tag-true">匹配</span></td><td style='font-size:12px;color:#888'></td></tr>
+<tr><td>4</td><td>高中数学</td><td>Q4</td>
+<td>C</td><td><span class="tag-true">对</span></td>
+<td>C</td><td><span class="tag-true">匹配</span></td><td style='font-size:12px;color:#888'></td></tr>
+<tr><td>5</td><td>高中数学</td><td>Q5</td>
+<td>C</td><td><span class="tag-true">对</span></td>
+<td>C</td><td><span class="tag-true">匹配</span></td><td style='font-size:12px;color:#888'></td></tr>
+<tr><td>6</td><td>高中数学</td><td>Q6</td>
+<td>A</td><td><span class="tag-true">对</span></td>
+<td>A</td><td><span class="tag-true">匹配</span></td><td style='font-size:12px;color:#888'></td></tr>
+<tr><td>7</td><td>高中数学</td><td>Q7</td>
+<td>x²/8+y²/6=1</td><td><span class="tag-true">对</span></td>
+<td>unreadable</td><td><span class="tag-na">识别失败</span></td><td style='font-size:12px;color:#888'>模型无法识别该答案区域</td></tr>
+<tr><td>8</td><td>高中数学</td><td>Q8</td>
+<td>√6</td><td><span class="tag-true">对</span></td>
+<td>unreadable</td><td><span class="tag-na">识别失败</span></td><td style='font-size:12px;color:#888'>模型无法识别该答案区域</td></tr>
+<tr><td>9</td><td>高中数学</td><td>Q9.1</td>
+<td>x²/4+4y²=1</td><td><span class="tag-true">对</span></td>
+<td>x^2/4 + y^2 = 1</td><td><span class="tag-false">不匹配</span></td><td style='font-size:12px;color:#888'>OCR偏差: 识别为[x^2/4 + y^2 = 1] 期望[x²/4+4y²=1]</td></tr>
+<tr><td>10</td><td>高中数学</td><td>Q9.2</td>
+<td>√3/4</td><td><span class="tag-true">对</span></td>
+<td>√3/4</td><td><span class="tag-true">匹配</span></td><td style='font-size:12px;color:#888'></td></tr>
+<tr class="subj"><td colspan="8">初中数学</td></tr>
+<tr><td>11</td><td>初中数学</td><td>Q1</td>
+<td>B</td><td><span class="tag-true">对</span></td>
+<td>B</td><td><span class="tag-true">匹配</span></td><td style='font-size:12px;color:#888'></td></tr>
+<tr><td>12</td><td>初中数学</td><td>Q2</td>
+<td>A</td><td><span class="tag-true">对</span></td>
+<td>A</td><td><span class="tag-true">匹配</span></td><td style='font-size:12px;color:#888'></td></tr>
+<tr><td>13</td><td>初中数学</td><td>Q3</td>
+<td>B</td><td><span class="tag-true">对</span></td>
+<td>B</td><td><span class="tag-true">匹配</span></td><td style='font-size:12px;color:#888'></td></tr>
+<tr><td>14</td><td>初中数学</td><td>Q4</td>
+<td>C</td><td><span class="tag-true">对</span></td>
+<td>C</td><td><span class="tag-true">匹配</span></td><td style='font-size:12px;color:#888'></td></tr>
+<tr><td>15</td><td>初中数学</td><td>Q5</td>
+<td>D</td><td><span class="tag-false">错</span></td>
+<td>unreadable</td><td><span class="tag-na">识别失败</span></td><td style='font-size:12px;color:#888'>模型无法识别该答案区域</td></tr>
+<tr><td>16</td><td>初中数学</td><td>Q6</td>
+<td>B</td><td><span class="tag-false">错</span></td>
+<td>B</td><td><span class="tag-true">匹配</span></td><td style='font-size:12px;color:#888'></td></tr>
+<tr><td>17</td><td>初中数学</td><td>Q7</td>
+<td>x²/4+y²/3=1(x≠±2)</td><td><span class="tag-false">错</span></td>
+<td>x²/4 + y²/3 = 1 (x≠±2)</td><td><span class="tag-true">匹配</span></td><td style='font-size:12px;color:#888'></td></tr>
+<tr><td>18</td><td>初中数学</td><td>Q8</td>
+<td>x²/(25/4)+y²/4=1</td><td><span class="tag-true">对</span></td>
+<td>x²/25/4 + y²/16/4 = 1</td><td><span class="tag-false">不匹配</span></td><td style='font-size:12px;color:#888'>OCR偏差: 识别为[x²/25/4 + y²/16/4 = 1] 期望[x²/(25/4)+y²/4=1]</td></tr>
+<tr><td>19</td><td>初中数学</td><td>Q9.1</td>
+<td>x-√2y-4=0</td><td><span class="tag-true">对</span></td>
+<td>x - √2y - 4 = 0</td><td><span class="tag-true">匹配</span></td><td style='font-size:12px;color:#888'></td></tr>
+<tr><td>20</td><td>初中数学</td><td>Q9.2</td>
+<td>(x-1)²+y²=9</td><td><span class="tag-true">对</span></td>
+<td>(x - 1/2)² + y² = 9/4</td><td><span class="tag-false">不匹配</span></td><td style='font-size:12px;color:#888'>OCR偏差: 识别为[(x - 1/2)² + y² = 9/4] 期望[(x-1)²+y²=9]</td></tr>
+</table>
+<h2>不匹配题目详情</h2><table><tr><th>题号</th><th>CSV 答案</th><th>系统识别</th><th>差异说明</th></tr>
+<tr><td>Q9.1</td><td>x²/4+4y²=1</td><td>x^2/4 + y^2 = 1</td>
+<td>系数丢失: CSV中为 4y², 系统识别为 y²</td></tr>
+<tr><td>Q8</td><td>x²/(25/4)+y²/4=1</td><td>x²/25/4 + y²/16/4 = 1</td>
+<td>格式差异: 数学含义相同, 表达方式不同</td></tr>
+<tr><td>Q9.2</td><td>(x-1)²+y²=9</td><td>(x - 1/2)² + y² = 9/4</td>
+<td>数值偏差: 系统识别为 1/2, CSV中为 1</td></tr>
+</table>
+<div class="note">
+<b>说明：</b><br>
+1. 当前批次为"先识别，不判分"模式，仅对比答案识别结果与 CSV 真值。<br>
+2. <b>识别匹配</b> = 系统从图片识别的学生答案与 CSV 记录的最终答案一致。<br>
+3. <b>识别不匹配</b> = 系统识别出了答案但与 CSV 不完全一致（可能为 OCR 精度问题）。<br>
+4. <b>识别失败 (unreadable)</b> = 系统无法识别该区域答案（Q7/Q8 为填空题手写公式，模型无法读取）。<br>
+5. 本批次仅包含数学学科（高中数学 + 初中数学各 1 张），物理/化学/英语未在此批次中运行。
+</div>
+</body></html>
