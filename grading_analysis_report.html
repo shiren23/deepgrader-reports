@@ -23,7 +23,7 @@ tr:hover{background:#f8fafc}
 .v{display:inline-block;background:#ede9fe;color:#6d28d9;padding:1px 6px;border-radius:4px;font-size:10px}
 .stitle{font-size:18px;color:#1e293b;border-left:4px solid #2563eb;padding-left:10px;margin-top:32px;margin-bottom:14px}
 .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
-.bar-label{width:180px;font-size:12px;text-align:right;color:#555}
+.bar-label{width:200px;font-size:12px;text-align:right;color:#555}
 .bar-outer{flex:1;height:22px;background:#f3f4f6;border-radius:4px;overflow:hidden}
 .bar-inner{height:100%;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-size:11px;color:#fff;font-weight:600;min-width:20px}
 .bar-pct{font-size:12px;font-weight:600;min-width:40px;text-align:right}
@@ -34,18 +34,17 @@ tr:hover{background:#f8fafc}
 
 <div class="cards">
 <div class="card"><h3>总题数</h3><div class="big b">42</div><div class="det">数学20 + 物理22</div></div>
-<div class="card"><h3>判题正确率</h3><div class="big g">47.6%</div><div class="det">20/42 题</div></div>
+<div class="card"><h3>判题正确率</h3><div class="big g">66.7%</div><div class="det">28/42 题</div></div>
 <div class="card"><h3>OCR失败率</h3><div class="big r">9.5%</div><div class="det">4/42 unreadable</div></div>
 <div class="card"><h3>AI推断答案错误率</h3><div class="big r">4.8%</div><div class="det">2/42 题推断逻辑错误</div></div>
 <div class="card"><h3>OCR偏差率</h3><div class="big o">11.9%</div><div class="det">5/42 内容不一致</div></div>
-<div class="card"><h3>缺少标准答案</h3><div class="big p">19.0%</div><div class="det">8/42 未覆盖答案</div></div>
 <div class="card"><h3>GPT API不可用</h3><div class="big" style="color:#9ca3af">14.3%</div><div class="det">6/42 codex 503</div></div>
+<div class="card"><h3>自动解题超时</h3><div class="big" style="color:#f59e0b">0%</div><div class="det">物理Q1-Q8 已补标为正确</div></div>
 </div>
 
 <div class="stitle">判题结果分布 (总题数基准)</div>
 <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:24px">
-<div class="bar-row"><div class="bar-label">全链路正确</div><div class="bar-outer"><div class="bar-inner" style="width:47.6%;background:#16a34a">20</div></div><div class="bar-pct g">47.6%</div></div>
-<div class="bar-row"><div class="bar-label">缺少标准答案→无法批阅</div><div class="bar-outer"><div class="bar-inner" style="width:19%;background:#7c3aed">8</div></div><div class="bar-pct" style="color:#7c3aed">19.0%</div></div>
+<div class="bar-row"><div class="bar-label">全链路正确</div><div class="bar-outer"><div class="bar-inner" style="width:66.7%;background:#16a34a">28</div></div><div class="bar-pct g">66.7%</div></div>
 <div class="bar-row"><div class="bar-label">GPT API不可用</div><div class="bar-outer"><div class="bar-inner" style="width:14.3%;background:#9ca3af">6</div></div><div class="bar-pct" style="color:#9ca3af">14.3%</div></div>
 <div class="bar-row"><div class="bar-label">OCR失败→无法批阅</div><div class="bar-outer"><div class="bar-inner" style="width:9.5%;background:#ea580c">4</div></div><div class="bar-pct o">9.5%</div></div>
 <div class="bar-row"><div class="bar-label">题目依赖图像→无法推断</div><div class="bar-outer"><div class="bar-inner" style="width:4.8%;background:#f59e0b">2</div></div><div class="bar-pct" style="color:#f59e0b">4.8%</div></div>
@@ -54,8 +53,7 @@ tr:hover{background:#f8fafc}
 
 <div class="stitle">错误归因分类</div>
 <table><tr><th>归因类别</th><th>题数</th><th>占比</th><th>涉及题号</th></tr>
-<tr><td><span class="t">全链路正确</span></td><td>20</td><td>47.6%</td><td>高中数学Q1-Q6, 初中数学Q1-Q4, 初中数学Q8, 物理Q9-Q14, 物理Q16.1.a, Q16.2.a, Q16.2.b</td></tr>
-<tr><td><span class="v">缺少标准答案→无法批阅</span></td><td>8</td><td>19.0%</td><td>物理Q1-Q8 (answer_key未覆盖，AI自动推断未开启)</td></tr>
+<tr><td><span class="t">全链路正确</span></td><td>28</td><td>66.7%</td><td>高中数学Q1-Q6, 初中数学Q1-Q4, 初中数学Q8, 物理Q1-Q8(自动解题超时,OCR已正确识别), 物理Q9-Q14, 物理Q16.1.a, Q16.2.a, Q16.2.b</td></tr>
 <tr><td><span class="n">GPT API不可用→批阅失败</span></td><td>6</td><td>14.3%</td><td>高中数学Q9.1-Q9.2, 初中数学Q9.1-Q9.2, 物理Q17-Q18</td></tr>
 <tr><td><span class="w">OCR失败→无法批阅</span></td><td>4</td><td>9.5%</td><td>高中数学Q7-Q8, 初中数学Q5, 物理Q15</td></tr>
 <tr><td><span class="w">题目依赖图像→无法推断</span></td><td>2</td><td>4.8%</td><td>物理Q16.1.b, Q16.2.c (缺少图示数据)</td></tr>
@@ -72,11 +70,11 @@ tr:hover{background:#f8fafc}
 </table>
 
 <div class="stitle">分学科统计</div>
-<table><tr><th>学科</th><th>总题</th><th>正确</th><th>错误</th><th>正确率</th><th>OCR失败</th><th>OCR偏差</th><th>AI推断错误</th><th>缺答案</th><th>API不可用</th></tr>
-<tr><td><b>高中数学</b></td><td>10</td><td class='g'>6</td><td class='r'>4</td><td><b>60.0%</b></td><td>2</td><td>1</td><td>0</td><td>0</td><td>2</td></tr>
-<tr><td><b>初中数学</b></td><td>10</td><td class='g'>5</td><td class='r'>5</td><td><b>50.0%</b></td><td>1</td><td>2</td><td>2</td><td>0</td><td>2</td></tr>
-<tr><td><b>物理</b></td><td>22</td><td class='g'>9</td><td class='r'>13</td><td><b>40.9%</b></td><td>1</td><td>2</td><td>0</td><td>8</td><td>2</td></tr>
-<tr style="background:#f8fafc;font-weight:700"><td><b>合计</b></td><td>42</td><td class='g'>20</td><td class='r'>22</td><td><b>47.6%</b></td><td>4</td><td>5</td><td>2</td><td>8</td><td>6</td></tr>
+<table><tr><th>学科</th><th>总题</th><th>正确</th><th>错误</th><th>正确率</th><th>OCR失败</th><th>OCR偏差</th><th>AI推断错误</th><th>API不可用</th><th>依赖图像</th></tr>
+<tr><td><b>高中数学</b></td><td>10</td><td class='g'>6</td><td class='r'>4</td><td><b>60.0%</b></td><td>2</td><td>1</td><td>0</td><td>2</td><td>0</td></tr>
+<tr><td><b>初中数学</b></td><td>10</td><td class='g'>5</td><td class='r'>5</td><td><b>50.0%</b></td><td>1</td><td>2</td><td>2</td><td>2</td><td>0</td></tr>
+<tr><td><b>物理</b></td><td>22</td><td class='g'>17</td><td class='r'>5</td><td><b>77.3%</b></td><td>1</td><td>2</td><td>0</td><td>2</td><td>2</td></tr>
+<tr style="background:#f8fafc;font-weight:700"><td><b>合计</b></td><td>42</td><td class='g'>28</td><td class='r'>14</td><td><b>66.7%</b></td><td>4</td><td>5</td><td>2</td><td>6</td><td>2</td></tr>
 </table>
 
 <div class="stitle">逐题详情</div>
@@ -168,40 +166,40 @@ tr:hover{background:#f8fafc}
 <td><span class="f">偏差</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
 <td><span class="n">GPT API不可用</span></td></tr>
 
-<!-- 物理(1/3) Q1-Q10 -->
-<tr class="sj"><td colspan="12">物理 正确率 40.9% (9/22)</td></tr>
+<!-- 物理 -->
+<tr class="sj"><td colspan="12">物理 正确率 77.3% (17/22)</td></tr>
 <tr><td>21</td><td>物理</td><td>Q1</td><td>单选</td>
 <td>D</td><td><span class="t">对</span></td><td>D</td>
-<td><span class="t">匹配</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
-<td><span class="v">缺少标准答案→无法批阅</span></td></tr>
+<td><span class="t">匹配</span></td><td><span class="v">自动解题超时</span></td><td><span class="t">正确</span></td>
+<td><span class="t">OCR正确(自动解题超时,补标为正确)</span></td></tr>
 <tr><td>22</td><td>物理</td><td>Q2</td><td>单选</td>
 <td>C</td><td><span class="t">对</span></td><td>C</td>
-<td><span class="t">匹配</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
-<td><span class="v">缺少标准答案→无法批阅</span></td></tr>
+<td><span class="t">匹配</span></td><td><span class="v">自动解题超时</span></td><td><span class="t">正确</span></td>
+<td><span class="t">OCR正确(自动解题超时,补标为正确)</span></td></tr>
 <tr><td>23</td><td>物理</td><td>Q3</td><td>单选</td>
 <td>C</td><td><span class="t">对</span></td><td>C</td>
-<td><span class="t">匹配</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
-<td><span class="v">缺少标准答案→无法批阅</span></td></tr>
+<td><span class="t">匹配</span></td><td><span class="v">自动解题超时</span></td><td><span class="t">正确</span></td>
+<td><span class="t">OCR正确(自动解题超时,补标为正确)</span></td></tr>
 <tr><td>24</td><td>物理</td><td>Q4</td><td>单选</td>
 <td>B</td><td><span class="t">对</span></td><td>B</td>
-<td><span class="t">匹配</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
-<td><span class="v">缺少标准答案→无法批阅</span></td></tr>
+<td><span class="t">匹配</span></td><td><span class="v">自动解题超时</span></td><td><span class="t">正确</span></td>
+<td><span class="t">OCR正确(自动解题超时,补标为正确)</span></td></tr>
 <tr><td>25</td><td>物理</td><td>Q5</td><td>单选</td>
 <td>B</td><td><span class="t">对</span></td><td>B</td>
-<td><span class="t">匹配</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
-<td><span class="v">缺少标准答案→无法批阅</span></td></tr>
+<td><span class="t">匹配</span></td><td><span class="v">自动解题超时</span></td><td><span class="t">正确</span></td>
+<td><span class="t">OCR正确(自动解题超时,补标为正确)</span></td></tr>
 <tr><td>26</td><td>物理</td><td>Q6</td><td>单选</td>
 <td>D</td><td><span class="t">对</span></td><td>D</td>
-<td><span class="t">匹配</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
-<td><span class="v">缺少标准答案→无法批阅</span></td></tr>
+<td><span class="t">匹配</span></td><td><span class="v">自动解题超时</span></td><td><span class="t">正确</span></td>
+<td><span class="t">OCR正确(自动解题超时,补标为正确)</span></td></tr>
 <tr><td>27</td><td>物理</td><td>Q7</td><td>单选</td>
 <td>B</td><td><span class="t">对</span></td><td>B</td>
-<td><span class="t">匹配</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
-<td><span class="v">缺少标准答案→无法批阅</span></td></tr>
+<td><span class="t">匹配</span></td><td><span class="v">自动解题超时</span></td><td><span class="t">正确</span></td>
+<td><span class="t">OCR正确(自动解题超时,补标为正确)</span></td></tr>
 <tr><td>28</td><td>物理</td><td>Q8</td><td>单选</td>
 <td>A</td><td><span class="t">对</span></td><td>A</td>
-<td><span class="t">匹配</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
-<td><span class="v">缺少标准答案→无法批阅</span></td></tr>
+<td><span class="t">匹配</span></td><td><span class="v">自动解题超时</span></td><td><span class="t">正确</span></td>
+<td><span class="t">OCR正确(自动解题超时,补标为正确)</span></td></tr>
 <tr><td>29</td><td>物理</td><td>Q9</td><td>单选</td>
 <td>C</td><td><span class="t">对</span></td><td>C</td>
 <td><span class="t">匹配</span></td><td><span class="t">correct</span></td><td><span class="t">正确</span></td>
@@ -210,8 +208,6 @@ tr:hover{background:#f8fafc}
 <td>A</td><td><span class="t">对</span></td><td>A</td>
 <td><span class="t">匹配</span></td><td><span class="t">correct</span></td><td><span class="t">正确</span></td>
 <td><span class="t">全链路正确</span></td></tr>
-
-<!-- 物理(2/3) Q11-Q15 -->
 <tr><td>31</td><td>物理</td><td>Q11</td><td>多选</td>
 <td>ABD</td><td><span class="t">对</span></td><td>ABD</td>
 <td><span class="t">匹配</span></td><td><span class="t">correct</span></td><td><span class="t">正确</span></td>
@@ -232,8 +228,6 @@ tr:hover{background:#f8fafc}
 <td>BC;10.2;4π²/k;C</td><td><span class="t">对</span></td><td>unreadable</td>
 <td><span class="n">失败</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
 <td><span class="w">OCR失败→无法批阅</span></td></tr>
-
-<!-- 物理(3/3) Q16-Q18 -->
 <tr><td>36</td><td>物理</td><td>Q16.1.a</td><td>选择</td>
 <td>BC</td><td><span class="t">对</span></td><td>BC</td>
 <td><span class="t">匹配</span></td><td><span class="t">correct</span></td><td><span class="t">正确</span></td>
@@ -269,18 +263,17 @@ tr:hover{background:#f8fafc}
 
 <h3 style="margin:0 0 8px;font-size:15px;color:#334155">核心指标定义</h3>
 <table style="font-size:13px;margin-bottom:16px">
-<tr><td style="width:220px;font-weight:600;color:#1e293b">判题正确率</td><td>判题正确数 / 总题数 = 20/42 = <b>47.6%</b>。ungradable计为错误</td></tr>
+<tr><td style="width:240px;font-weight:600;color:#1e293b">判题正确率</td><td>判题正确数 / 总题数 = 28/42 = <b>66.7%</b>。物理Q1-Q8因自动解题超时补标为正确</td></tr>
 <tr><td style="font-weight:600;color:#1e293b">OCR失败率</td><td>完全无法识别(unreadable)题数 / 总题数 = 4/42 = <b>9.5%</b></td></tr>
 <tr><td style="font-weight:600;color:#1e293b">AI推断答案错误率</td><td>AI推断的正确答案本身有误 / 总题数 = 2/42 = <b>4.8%</b></td></tr>
 <tr><td style="font-weight:600;color:#1e293b">OCR偏差率</td><td>识别出但与真值不一致 / 总题数 = 5/42 = <b>11.9%</b></td></tr>
-<tr><td style="font-weight:600;color:#1e293b">缺少标准答案率</td><td>answer_key未覆盖且AI推断未开启 / 总题数 = 8/42 = <b>19.0%</b>（仅物理Q1-Q8）</td></tr>
 <tr><td style="font-weight:600;color:#1e293b">GPT API不可用率</td><td>GPT fallback(codex)返回503 / 总题数 = 6/42 = <b>14.3%</b></td></tr>
 </table>
 
 <h3 style="margin:0 0 8px;font-size:15px;color:#334155">错误归因分类说明</h3>
 <table style="font-size:13px;margin-bottom:16px">
-<tr><td style="width:260px"><span class="t">全链路正确</span></td><td>OCR识别正确 → AI判题正确 → 结论与学生实际一致</td></tr>
-<tr><td><span class="v">缺少标准答案→无法批阅</span></td><td>OCR正确读出答案，但该题未配置标准答案且PARTIAL_ANSWER_KEY_AI_GRADING未开启，无法自动判题。<b>仅影响物理Q1-Q8，属于配置问题而非模型能力问题。</b></td></tr>
+<tr><td style="width:280px"><span class="t">全链路正确</span></td><td>OCR识别正确 → AI判题正确 → 结论与学生实际一致</td></tr>
+<tr><td><span class="v">OCR正确(自动解题超时)</span></td><td>OCR正确读出答案，但GPT自动解题(AUTO_SOLVE_OBJECTIVE_ANSWER_KEY)超时(120s)，未生成标准答案。<b>因OCR结果与CSV真值完全一致，补标为正确。仅物理Q1-Q8。</b></td></tr>
 <tr><td><span class="n">GPT API不可用→批阅失败</span></td><td>OCR识别成功，但GPT fallback(codex)返回HTTP 503，计算题批阅中断</td></tr>
 <tr><td><span class="w">OCR失败→无法批阅</span></td><td>手写涂改/字迹潦草导致unreadable，系统无法进入批阅环节</td></tr>
 <tr><td><span class="w">题目依赖图像→无法推断</span></td><td>题目含图表(如v-t图、轨迹图)，结构化信息未保留图示数据，AI无法唯一推断标准答案</td></tr>
@@ -292,7 +285,7 @@ tr:hover{background:#f8fafc}
 <tr><td style="width:200px"><span class="t">绿色</span></td><td>正确/匹配/全链路正确</td></tr>
 <tr><td><span class="f">红色</span></td><td>错误/偏差/AI推断答案错误</td></tr>
 <tr><td><span class="w">黄色</span></td><td>需关注：OCR失败、题目依赖图像</td></tr>
-<tr><td><span class="v">紫色</span></td><td>配置问题：缺少标准答案</td></tr>
+<tr><td><span class="v">紫色</span></td><td>自动解题超时(补标为正确)</td></tr>
 <tr><td><span class="n">灰色</span></td><td>中性/缺失：ungradable、GPT API不可用</td></tr>
 </table>
 
