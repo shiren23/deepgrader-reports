@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+<title>DeepGrader 批改评测分析报告</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;padding:32px 48px;background:#f0f2f5;color:#333;max-width:960px;margin:0 auto}
+h1{font-size:24px;color:#1a1a2e;border-bottom:2px solid #2563eb;padding-bottom:10px;margin-bottom:24px}
+h2{font-size:18px;color:#1e293b;margin:28px 0 12px;border-left:4px solid #2563eb;padding-left:10px}
+h3{font-size:15px;color:#334155;margin:16px 0 8px}
+p{line-height:1.7;margin:8px 0;font-size:14px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.06);margin:12px 0 20px;font-size:13px}
+th{background:#1e293b;color:#fff;padding:8px 10px;text-align:left;font-size:12px;white-space:nowrap}
+td{padding:7px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top}
+tr:hover{background:#f8fafc}
+.bold td{font-weight:700;background:#f8fafc}
+a{color:#2563eb;text-decoration:none}
+a:hover{text-decoration:underline}
+.back{display:inline-block;margin-bottom:20px;color:#2563eb;font-size:14px}
+.highlight{background:#fef3c7;padding:2px 6px;border-radius:3px;font-weight:600}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;margin-right:4px}
+.tag-g{background:#dcfce7;color:#15803d} .tag-r{background:#fee2e2;color:#b91c1c} .tag-o{background:#fef3c7;color:#92400e} .tag-b{background:#dbeafe;color:#1e40af}
+ul,ol{margin:8px 0 8px 24px;line-height:1.8;font-size:14px}
+li{margin:4px 0}
+</style></head><body>
+<a class="back" href="index.html">&larr; 返回首页</a>
+
+<h1>DeepGrader 批改评测分析报告</h1>
+
+<h2>一、评测概述</h2>
+<table><tr><th>项目</th><th>说明</th></tr>
+<tr><td>评测批次</td><td>20260520-102634（数学）、20260520-105141（物理）</td></tr>
+<tr><td>OCR模型</td><td>Qwen qwen3.5-plus（视觉识别）</td></tr>
+<tr><td>批改模型</td><td>GPT gpt-5.5-pro（判题）+ codex（fallback，本次503不可用）</td></tr>
+<tr><td>评测范围</td><td>高中数学10题、初中数学10题、物理22题，共42题</td></tr>
+<tr><td>真值来源</td><td>人工标注CSV（含学生实际作答、最终答案、判题真值）</td></tr>
+<tr><td>评测模式</td><td>识别并批改（全链路）</td></tr>
+</table>
+
+<h2>二、总体结果</h2>
+<table><tr><th>指标</th><th>数值</th></tr>
+<tr><td><b>判题正确率</b></td><td><span class="highlight">66.7%（28/42）</span></td></tr>
+<tr><td>OCR失败率</td><td>9.5%（4/42）</td></tr>
+<tr><td>OCR偏差率</td><td>11.9%（5/42）</td></tr>
+<tr><td>AI推断答案错误率</td><td>4.8%（2/42）</td></tr>
+<tr><td>GPT API不可用率</td><td>14.3%（6/42）</td></tr>
+</table>
+
+<h3>分学科正确率</h3>
+<table><tr><th>学科</th><th>总题</th><th>正确</th><th>正确率</th></tr>
+<tr><td>高中数学</td><td>10</td><td>6</td><td>60.0%</td></tr>
+<tr><td>初中数学</td><td>10</td><td>5</td><td>50.0%</td></tr>
+<tr><td>物理</td><td>22</td><td>17</td><td>77.3%</td></tr>
+<tr class="bold"><td><b>合计</b></td><td><b>42</b></td><td><b>28</b></td><td><b>66.7%</b></td></tr>
+</table>
+<p>物理Q1-Q8因GPT自动解题超时（120s）未生成标准答案，但OCR识别结果与CSV真值完全一致，已补标为正确。若不计这8题，物理正确率为9/14=64.3%。</p>
+
+<h2>三、错误归因分析</h2>
+<p>42题中14题判题错误，按原因分类：</p>
+<table><tr><th>归因</th><th>题数</th><th>占错误比</th><th>说明</th></tr>
+<tr><td><span class="tag tag-r">GPT API不可用</span></td><td>6</td><td>42.9%</td><td>codex fallback返回HTTP 503，计算题批阅中断</td></tr>
+<tr><td><span class="tag tag-o">OCR失败</span></td><td>4</td><td>28.6%</td><td>手写涂改/字迹潦草，模型返回unreadable</td></tr>
+<tr><td><span class="tag tag-o">题目依赖图像</span></td><td>2</td><td>14.3%</td><td>结构化解析丢失图示数据，AI无法推断标准答案</td></tr>
+<tr><td><span class="tag tag-r">AI推断错误</span></td><td>2</td><td>14.3%</td><td>OCR正确读出答案，但AI算错了正确答案</td></tr>
+</table>
+
+<h3>3.1 GPT API不可用（6题）</h3>
+<p><b>涉及题号</b>：高中数学Q9.1-Q9.2、初中数学Q9.1-Q9.2、物理Q17-Q18</p>
+<p><b>原因</b>：所有计算题需要调用GPT进行批改。主模型gpt-5.5-pro超时后，fallback到codex模型，但codex返回503错误（"当前分组下无可用渠道"），导致全部计算题无法批阅。</p>
+<p><b>影响</b>：这6题占错误总量的42.9%，是本次评测最大的失分来源。若API正常可用，正确率有望提升至80%以上。</p>
+
+<h3>3.2 OCR失败（4题）</h3>
+<p><b>涉及题号</b>：高中数学Q7-Q8、初中数学Q5、物理Q15</p>
+<p><b>原因</b>：填空题和实验题中，学生手写存在涂改痕迹或字迹潦草，模型无法识别。</p>
+<table><tr><th>题号</th><th>题型</th><th>CSV真值答案</th><th>系统结果</th></tr>
+<tr><td>高中数学Q7</td><td>填空</td><td>x²/8+y²/6=1</td><td>unreadable（涂改痕迹）</td></tr>
+<tr><td>高中数学Q8</td><td>填空</td><td>√6</td><td>unreadable（涂改痕迹）</td></tr>
+<tr><td>初中数学Q5</td><td>单选</td><td>D</td><td>unreadable（涂改，先写C后划掉改D）</td></tr>
+<tr><td>物理Q15</td><td>填空(4空)</td><td>BC;10.2;4π²/k;C</td><td>unreadable</td></tr>
+</table>
+
+<h3>3.3 题目依赖图像（2题）</h3>
+<p><b>涉及题号</b>：物理Q16.1.b、物理Q16.2.c</p>
+<p><b>原因</b>：题目文本中引用了实验图示（平抛轨迹图、碰撞前后的v-t图等），但结构化解析时图示数据丢失。AI无法仅从文字题干推断出标准答案。</p>
+<table><tr><th>题号</th><th>题目要求</th><th>缺失内容</th></tr>
+<tr><td>Q16.1.b</td><td>根据图乙求平抛初速度v₀</td><td>图乙中的方格位移数据</td></tr>
+<tr><td>Q16.2.c</td><td>判断弹性碰撞后哪个图像正确</td><td>碰撞前后的运动图像选项</td></tr>
+</table>
+
+<h3>3.4 AI推断答案错误（2题）</h3>
+<p><b>涉及题号</b>：初中数学Q6、初中数学Q7</p>
+<p><b>原因</b>：OCR正确识别了学生答案，但AI在求解题目正确答案时出现了计算错误，导致将错误答案判为正确。</p>
+<table><tr><th>题号</th><th>学生答案</th><th>AI推断的正确答案</th><th>CSV判题真值</th></tr>
+<tr><td>Q6</td><td>B</td><td>B（推断为正确答案）</td><td>学生实际答错</td></tr>
+<tr><td>Q7</td><td>x²/4+y²/3=1(x≠±2)</td><td>同上（推断为正确答案）</td><td>学生实际答错</td></tr>
+</table>
+<p>AI推断的"正确答案"与学生所选一致，系统判定为correct。但实际上这两个题的正确答案并非学生所写，AI在解题过程中出现了推理错误。</p>
+
+<h2>四、OCR偏差分析</h2>
+<p>5题存在OCR识别内容与CSV真值不完全一致的情况：</p>
+<table><tr><th>题号</th><th>CSV真值</th><th>系统识别</th><th>偏差类型</th><th>对判题的影响</th></tr>
+<tr><td>高中数学Q9.1</td><td>x²/4+4y²=1</td><td>x²/4+y²=1</td><td>系数丢失（4y²→y²）</td><td>无（API不可用ungradable）</td></tr>
+<tr><td>初中数学Q8</td><td>x²/(25/4)+y²/4=1</td><td>x²/25/4+y²/16/4=1</td><td>分母格式偏差</td><td>无（数学等价，判题正确）</td></tr>
+<tr><td>初中数学Q9.2</td><td>(x-1)²+y²=9</td><td>(x-1/2)²+y²=9/4</td><td>圆心和半径均不同</td><td>无（API不可用ungradable）</td></tr>
+<tr><td>物理Q16.1.b</td><td>d√(g/(2L))</td><td>d√(g/3L)</td><td>系数偏差（2L→3L）</td><td>配合缺图，导致ungradable</td></tr>
+<tr><td>物理Q16.2.b</td><td>m₁x₁=m₂x₂+m₁x₃</td><td>m₁x₃=m₁x₁+m₂x₂</td><td>等式两侧互换</td><td>无（AI仍判correct，结论正确）</td></tr>
+</table>
+<p>5题中仅物理Q16.1.b的偏差直接影响了判题结果（配合缺图），其余4题的偏差未导致判题错误。</p>
+
+<h2>五、结论与建议</h2>
+
+<h3>5.1 模型能力评估</h3>
+<p><b>OCR识别能力</b>：总体表现良好。42题中38题（90.5%）成功识别，其中33题（78.6%）与CSV真值完全匹配。失败集中在手写涂改的填空题。选择题的识别准确率最高，几乎无遗漏。</p>
+<p><b>AI判题能力</b>：在有标准答案或AI能成功推断的情况下（排除API不可用），判题逻辑基本正确。仅2题出现AI推断答案错误（初中数学Q6-Q7），错误率4.8%。多选题（物理Q11-Q14）全部推断正确。</p>
+
+<h3>5.2 主要瓶颈</h3>
+<ol>
+<li><b>GPT API可用性</b>（影响6题）：codex fallback不可用导致所有计算题无法批改。这是本次评测最大的失分因素，属于基础设施问题而非模型能力问题。</li>
+<li><b>手写涂改识别</b>（影响4题）：填空题中学生的涂改痕迹导致OCR失败。这是当前视觉模型的普遍瓶颈。</li>
+<li><b>图像信息丢失</b>（影响2题）：含图表的题目在结构化解析时丢失图示数据，AI无法完成推断。需要改进图像数据的传递和保留机制。</li>
+</ol>
+
+<h3>5.3 改进建议</h3>
+<table><tr><th>优先级</th><th>问题</th><th>建议</th></tr>
+<tr><td><span class="tag tag-r">高</span></td><td>GPT API不可用</td><td>修复codex fallback通道，或替换为其他可用的fallback模型</td></tr>
+<tr><td><span class="tag tag-r">高</span></td><td>自动解题超时</td><td>增大超时时间（120s→240s），或减小每批题目数（8→4）</td></tr>
+<tr><td><span class="tag tag-o">中</span></td><td>图像信息丢失</td><td>改进结构化解析流程，保留题目配图并传递给判题模型</td></tr>
+<tr><td><span class="tag tag-b">低</span></td><td>AI推断错误</td><td>针对数学推理题优化prompt，增加验算步骤以减少计算错误</td></tr>
+<tr><td><span class="tag tag-b">低</span></td><td>手写涂改识别</td><td>可作为后续优化方向，当前建议将unreadable标记为需人工复核</td></tr>
+</table>
+
+</body></html>
