@@ -1,0 +1,210 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+<title>DeepGrader 批阅结果分析报告</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;margin:0;padding:24px 40px;background:#f0f2f5;color:#333}
+h1{text-align:center;color:#1a1a2e;font-size:26px;margin-bottom:4px}
+.sub{text-align:center;color:#888;margin-bottom:20px;font-size:14px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:28px}
+.card{background:#fff;border-radius:12px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.card h3{margin:0 0 4px;font-size:12px;color:#666}
+.card .big{font-size:28px;font-weight:700}
+.card .det{font-size:12px;color:#888;margin-top:2px}
+.g{color:#16a34a} .r{color:#dc2626} .b{color:#2563eb} .o{color:#ea580c} .p{color:#7c3aed}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:24px;font-size:13px}
+th{background:#1e293b;color:#fff;padding:8px 6px;text-align:left;font-size:11px;white-space:nowrap}
+td{padding:7px 8px;border-bottom:1px solid #f1f5f9;vertical-align:top;line-height:1.4}
+tr:hover{background:#f8fafc}
+.sj td{background:#eff6ff;font-weight:600;color:#1e40af;font-size:13px}
+.t{display:inline-block;background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:4px;font-weight:600;font-size:11px}
+.f{display:inline-block;background:#fee2e2;color:#b91c1c;padding:2px 8px;border-radius:4px;font-weight:600;font-size:11px}
+.n{display:inline-block;background:#f3f4f6;color:#9ca3af;padding:2px 8px;border-radius:4px;font-size:11px}
+.w{display:inline-block;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;font-size:11px}
+.stitle{font-size:18px;color:#1e293b;border-left:4px solid #2563eb;padding-left:10px;margin-top:32px;margin-bottom:14px}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.bar-label{width:160px;font-size:12px;text-align:right;color:#555}
+.bar-outer{flex:1;height:22px;background:#f3f4f6;border-radius:4px;overflow:hidden}
+.bar-inner{height:100%;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-size:11px;color:#fff;font-weight:600}
+.bar-pct{font-size:12px;font-weight:600;min-width:40px;text-align:right}
+.note{background:#fffbeb;border:1px solid #fbbf24;border-radius:8px;padding:14px;margin-top:16px;font-size:13px;color:#92400e;line-height:1.6}
+.legend-box{background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-top:20px}
+</style></head><body>
+<h1>DeepGrader 批阅结果分析报告</h1>
+<p class="sub">批次 20260520-102634 &middot; 识别并批改 &middot; qwen3.5-plus + gpt-5.5-pro</p>
+
+<div class="cards">
+<div class="card"><h3>总题数</h3><div class="big b">20</div></div>
+<div class="card"><h3>判题正确率</h3><div class="big g">55.0%</div><div class="det">11/20 题</div></div>
+<div class="card"><h3>OCR失败率</h3><div class="big r">15.0%</div><div class="det">3/20 题unreadable</div></div>
+<div class="card"><h3>AI推断答案错误率</h3><div class="big r">10.0%</div><div class="det">2/20 题推断逻辑错误</div></div>
+<div class="card"><h3>OCR偏差率</h3><div class="big o">15.0%</div><div class="det">3/20 题内容不一致</div></div>
+<div class="card"><h3>GPT API不可用</h3><div class="big n">20.0%</div><div class="det">4/20 题(codex 503)</div></div>
+</div>
+
+<div class="stitle">判题结果分布 (总题数基准)</div>
+<div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:24px">
+<div class="bar-row"><div class="bar-label">判题正确</div><div class="bar-outer"><div class="bar-inner" style="width:55%;background:#16a34a">11</div></div><div class="bar-pct g">55.0%</div></div>
+<div class="bar-row"><div class="bar-label">OCR失败→无法批阅</div><div class="bar-outer"><div class="bar-inner" style="width:15%;background:#ea580c">3</div></div><div class="bar-pct o">15.0%</div></div>
+<div class="bar-row"><div class="bar-label">AI推断答案错误</div><div class="bar-outer"><div class="bar-inner" style="width:10%;background:#dc2626">2</div></div><div class="bar-pct r">10.0%</div></div>
+<div class="bar-row"><div class="bar-label">GPT API不可用</div><div class="bar-outer"><div class="bar-inner" style="width:20%;background:#9ca3af">4</div></div><div class="bar-pct" style="color:#9ca3af">20.0%</div></div>
+</div>
+
+<div class="stitle">错误归因分类</div>
+<table><tr><th>归因类别</th><th>题数</th><th>占总题比</th><th>涉及题号</th></tr>
+<tr><td><span class="t">全链路正确</span></td><td>11</td><td>55.0%</td><td>高中Q1-Q6, 初中Q1-Q4, 初中Q8</td></tr>
+<tr><td><span class="w">OCR失败→无法批阅</span></td><td>3</td><td>15.0%</td><td>高中Q7, 高中Q8, 初中Q5</td></tr>
+<tr><td><span class="f">AI推断答案错误→判题错误</span></td><td>2</td><td>10.0%</td><td>初中Q6, 初中Q7</td></tr>
+<tr><td><span class="n">GPT API不可用→批阅失败</span></td><td>4</td><td>20.0%</td><td>高中Q9.1, 高中Q9.2, 初中Q9.1, 初中Q9.2</td></tr>
+</table>
+
+<div class="stitle">OCR偏差明细 (3题)</div>
+<table><tr><th>题号</th><th>CSV真值答案</th><th>系统识别答案</th><th>判题结果</th><th>备注</th></tr>
+<tr><td>高中Q9.1</td><td>x²/4+4y²=1</td><td>x^2/4 + y^2 = 1</td><td><span class="n">ungradable</span></td><td>系数4y²→y²，同时受GPT API不可用影响</td></tr>
+<tr><td>初中Q8</td><td>x²/(25/4)+y²/4=1</td><td>x²/25/4 + y²/16/4 = 1</td><td><span class="t">correct</span></td><td>分母格式偏差，但数学等价，判题结果正确</td></tr>
+<tr><td>初中Q9.2</td><td>(x-1)²+y²=9</td><td>(x-1/2)²+y²=9/4</td><td><span class="n">ungradable</span></td><td>圆心和半径均不同，同时受GPT API不可用影响</td></tr>
+</table>
+
+<div class="stitle">分学科统计</div>
+<table><tr><th>学科</th><th>总题</th><th>正确</th><th>错误</th><th>正确率</th><th>OCR失败</th><th>OCR偏差</th><th>AI推断错误</th><th>API不可用</th></tr>
+<tr><td><b>高中数学</b></td><td>10</td><td class='g'>6</td><td class='r'>4</td><td><b>60.0%</b></td><td>2</td><td>1</td><td>0</td><td>2</td></tr>
+<tr><td><b>初中数学</b></td><td>10</td><td class='g'>5</td><td class='r'>5</td><td><b>50.0%</b></td><td>1</td><td>2</td><td>2</td><td>2</td></tr>
+</table>
+
+<div class="stitle">逐题详情</div>
+<table><tr><th>#</th><th>学科</th><th>题号</th><th>题型</th><th>CSV答案</th><th>学生实际</th><th>系统识别</th><th>识别</th><th>系统判题</th><th>最终结论</th><th>错误归因</th></tr>
+<tr class="sj"><td colspan="12">高中数学 正确率 60% (6/10)</td></tr>
+<tr><td>1</td><td>高中数学</td><td>Q1</td><td>多选</td>
+<td>AC</td><td><span class="t">对</span></td><td>AC</td>
+<td><span class="t">匹配</span></td><td><span class="t">correct</span></td><td><span class="t">正确</span></td>
+<td><span class="t">全链路正确</span></td></tr>
+<tr><td>2</td><td>高中数学</td><td>Q2</td><td>单选</td>
+<td>A</td><td><span class="t">对</span></td><td>A</td>
+<td><span class="t">匹配</span></td><td><span class="t">correct</span></td><td><span class="t">正确</span></td>
+<td><span class="t">全链路正确</span></td></tr>
+<tr><td>3</td><td>高中数学</td><td>Q3</td><td>单选</td>
+<td>C</td><td><span class="t">对</span></td><td>C</td>
+<td><span class="t">匹配</span></td><td><span class="t">correct</span></td><td><span class="t">正确</span></td>
+<td><span class="t">全链路正确</span></td></tr>
+<tr><td>4</td><td>高中数学</td><td>Q4</td><td>单选</td>
+<td>C</td><td><span class="t">对</span></td><td>C</td>
+<td><span class="t">匹配</span></td><td><span class="t">correct</span></td><td><span class="t">正确</span></td>
+<td><span class="t">全链路正确</span></td></tr>
+<tr><td>5</td><td>高中数学</td><td>Q5</td><td>单选</td>
+<td>C</td><td><span class="t">对</span></td><td>C</td>
+<td><span class="t">匹配</span></td><td><span class="t">correct</span></td><td><span class="t">正确</span></td>
+<td><span class="t">全链路正确</span></td></tr>
+<tr><td>6</td><td>高中数学</td><td>Q6</td><td>单选</td>
+<td>A</td><td><span class="t">对</span></td><td>A</td>
+<td><span class="t">匹配</span></td><td><span class="t">correct</span></td><td><span class="t">正确</span></td>
+<td><span class="t">全链路正确</span></td></tr>
+<tr><td>7</td><td>高中数学</td><td>Q7</td><td>填空</td>
+<td>x²/8+y²/6=1</td><td><span class="t">对</span></td><td>unreadable</td>
+<td><span class="n">失败</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
+<td><span class="w">OCR失败→无法批阅</span></td></tr>
+<tr><td>8</td><td>高中数学</td><td>Q8</td><td>填空</td>
+<td>√6</td><td><span class="t">对</span></td><td>unreadable</td>
+<td><span class="n">失败</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
+<td><span class="w">OCR失败→无法批阅</span></td></tr>
+<tr><td>9</td><td>高中数学</td><td>Q9.1</td><td>计算</td>
+<td>x²/4+4y²=1</td><td><span class="t">对</span></td><td>x^2/4 + y^2 = 1</td>
+<td><span class="f">偏差</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
+<td><span class="n">GPT API不可用</span></td></tr>
+<tr><td>10</td><td>高中数学</td><td>Q9.2</td><td>计算</td>
+<td>√3/4</td><td><span class="t">对</span></td><td>√3/4</td>
+<td><span class="t">匹配</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
+<td><span class="n">GPT API不可用</span></td></tr>
+<tr class="sj"><td colspan="12">初中数学 正确率 50% (5/10)</td></tr>
+<tr><td>11</td><td>初中数学</td><td>Q1</td><td>单选</td>
+<td>B</td><td><span class="t">对</span></td><td>B</td>
+<td><span class="t">匹配</span></td><td><span class="t">correct</span></td><td><span class="t">正确</span></td>
+<td><span class="t">全链路正确</span></td></tr>
+<tr><td>12</td><td>初中数学</td><td>Q2</td><td>单选</td>
+<td>A</td><td><span class="t">对</span></td><td>A</td>
+<td><span class="t">匹配</span></td><td><span class="t">correct</span></td><td><span class="t">正确</span></td>
+<td><span class="t">全链路正确</span></td></tr>
+<tr><td>13</td><td>初中数学</td><td>Q3</td><td>单选</td>
+<td>B</td><td><span class="t">对</span></td><td>B</td>
+<td><span class="t">匹配</span></td><td><span class="t">correct</span></td><td><span class="t">正确</span></td>
+<td><span class="t">全链路正确</span></td></tr>
+<tr><td>14</td><td>初中数学</td><td>Q4</td><td>单选</td>
+<td>C</td><td><span class="t">对</span></td><td>C</td>
+<td><span class="t">匹配</span></td><td><span class="t">correct</span></td><td><span class="t">正确</span></td>
+<td><span class="t">全链路正确</span></td></tr>
+<tr><td>15</td><td>初中数学</td><td>Q5</td><td>单选</td>
+<td>D</td><td><span class="f">错</span></td><td>unreadable</td>
+<td><span class="n">失败</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
+<td><span class="w">OCR失败→无法批阅</span></td></tr>
+<tr><td>16</td><td>初中数学</td><td>Q6</td><td>单选</td>
+<td>B</td><td><span class="f">错</span></td><td>B</td>
+<td><span class="t">匹配</span></td><td><span class="t">correct</span></td><td><span class="f">错误</span></td>
+<td><span class="f">AI推断答案错误→判题错误</span></td></tr>
+<tr><td>17</td><td>初中数学</td><td>Q7</td><td>填空</td>
+<td>x²/4+y²/3=1(x≠±2)</td><td><span class="f">错</span></td><td>x²/4+y²/3=1(x≠±2)</td>
+<td><span class="t">匹配</span></td><td><span class="t">correct</span></td><td><span class="f">错误</span></td>
+<td><span class="f">AI推断答案错误→判题错误</span></td></tr>
+<tr><td>18</td><td>初中数学</td><td>Q8</td><td>填空</td>
+<td>x²/(25/4)+y²/4=1</td><td><span class="t">对</span></td><td>x²/25/4+y²/16/4=1</td>
+<td><span class="f">偏差</span></td><td><span class="t">correct</span></td><td><span class="t">正确</span></td>
+<td><span class="t">全链路正确</span></td></tr>
+<tr><td>19</td><td>初中数学</td><td>Q9.1</td><td>计算</td>
+<td>x-√2y-4=0</td><td><span class="t">对</span></td><td>x-√2y-4=0</td>
+<td><span class="t">匹配</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
+<td><span class="n">GPT API不可用</span></td></tr>
+<tr><td>20</td><td>初中数学</td><td>Q9.2</td><td>计算</td>
+<td>(x-1)²+y²=9</td><td><span class="t">对</span></td><td>(x-1/2)²+y²=9/4</td>
+<td><span class="f">偏差</span></td><td><span class="n">ungradable</span></td><td><span class="f">错误</span></td>
+<td><span class="n">GPT API不可用</span></td></tr>
+</table>
+
+<div class="legend-box">
+<h2 style="margin:0 0 16px;font-size:18px;color:#1e293b;border-left:4px solid #2563eb;padding-left:10px">标注含义说明</h2>
+
+<h3 style="margin:0 0 8px;font-size:15px;color:#334155">核心指标定义</h3>
+<table style="font-size:13px;margin-bottom:16px">
+<tr><td style="width:200px;font-weight:600;color:#1e293b">判题正确率</td><td>判题正确数 / 总题数 = 11/20 = <b>55.0%</b>。无法判断(ungradable)计为错误，反映系统端到端真实表现</td></tr>
+<tr><td style="font-weight:600;color:#1e293b">OCR失败率</td><td>OCR完全无法识别(unreadable)题数 / 总题数 = 3/20 = <b>15.0%</b>。手写涂改、字迹潦草导致模型读不出答案</td></tr>
+<tr><td style="font-weight:600;color:#1e293b">AI推断答案错误率</td><td>AI推断的正确答案本身有误的题数 / 总题数 = 2/20 = <b>10.0%</b>。OCR正确读出学生答案，但AI求解题目时算错了正确答案</td></tr>
+<tr><td style="font-weight:600;color:#1e293b">OCR偏差率</td><td>OCR识别出内容但与真值不一致的题数 / 总题数 = 3/20 = <b>15.0%</b>。模型识别出答案但存在系数、格式等偏差</td></tr>
+</table>
+
+<h3 style="margin:0 0 8px;font-size:15px;color:#334155">表格列说明</h3>
+<table style="font-size:13px;margin-bottom:16px">
+<tr><td style="width:200px;font-weight:600;color:#1e293b">CSV答案</td><td>CSV文件中人工记录的学生实际作答</td></tr>
+<tr><td style="font-weight:600;color:#1e293b">学生实际</td><td>CSV中判题真值：学生实际答对(对)还是答错(错)</td></tr>
+<tr><td style="font-weight:600;color:#1e293b">系统识别</td><td>Qwen模型从图片识别的学生答案 (parsed.json → student_answer)</td></tr>
+<tr><td style="font-weight:600;color:#1e293b">识别</td><td><span class="t">匹配</span>=与CSV一致；<span class="f">偏差</span>=识别出但内容不一致；<span class="n">失败</span>=unreadable</td></tr>
+<tr><td style="font-weight:600;color:#1e293b">系统判题</td><td>GPT批阅模型的结论 (grading.json → judgement)：correct/incorrect/ungradable</td></tr>
+<tr><td style="font-weight:600;color:#1e293b">最终结论</td><td><span class="t">正确</span>=系统判题与学生实际对错一致；<span class="f">错误</span>=不一致或ungradable（ungradable计为错误）</td></tr>
+<tr><td style="font-weight:600;color:#1e293b">错误归因</td><td>定位问题出在哪个环节：OCR失败、AI推断答案错误、GPT API不可用</td></tr>
+</table>
+
+<h3 style="margin:0 0 8px;font-size:15px;color:#334155">错误归因分类说明</h3>
+<table style="font-size:13px;margin-bottom:16px">
+<tr><td style="width:260px"><span class="t">全链路正确</span></td><td>OCR识别正确 → AI判题正确 → 结论与学生实际一致</td></tr>
+<tr><td><span class="w">OCR失败→无法批阅</span></td><td>手写涂改/字迹潦草导致unreadable，系统无法进入批阅环节</td></tr>
+<tr><td><span class="f">AI推断答案错误→判题错误</span></td><td>OCR准确读出学生答案，但AI推断的"正确答案"本身算错了，导致判题结论错误。<br><b>示例：</b>初中Q6学生选B，AI推断正确答案也是B判定为correct，但实际B不是正确答案（学生实际答错了）</td></tr>
+<tr><td><span class="n">GPT API不可用→批阅失败</span></td><td>OCR识别成功，但GPT fallback(codex)返回HTTP 503，批阅环节中断，结果为ungradable</td></tr>
+</table>
+
+<h3 style="margin:0 0 8px;font-size:15px;color:#334155">OCR偏差 vs OCR失败</h3>
+<table style="font-size:13px;margin-bottom:16px">
+<tr><td style="width:200px;font-weight:600;color:#ea580c">OCR偏差</td><td>模型识别出了答案，但内容与真值不完全一致（如系数丢失、格式差异、数值偏移）。系统仍可进入批阅环节。</td></tr>
+<tr><td style="font-weight:600;color:#ea580c">OCR失败</td><td>模型完全无法识别答案，返回unreadable。系统无法进入批阅环节，直接判定为ungradable。</td></tr>
+</table>
+
+<h3 style="margin:0 0 8px;font-size:15px;color:#334155">标签颜色</h3>
+<table style="font-size:13px;margin-bottom:16px">
+<tr><td style="width:200px"><span class="t">绿色</span></td><td>正确/匹配/全链路正确</td></tr>
+<tr><td><span class="f">红色</span></td><td>错误/偏差/AI推断答案错误</td></tr>
+<tr><td><span class="w">黄色</span></td><td>需关注：OCR失败</td></tr>
+<tr><td><span class="n">灰色</span></td><td>中性/缺失：ungradable、GPT API不可用</td></tr>
+</table>
+
+<h3 style="margin:0 0 8px;font-size:15px;color:#334155">数据来源</h3>
+<table style="font-size:13px">
+<tr><td style="width:200px;font-weight:600;color:#1e293b">parsed.json</td><td>Qwen (qwen3.5-plus) 视觉识别结果，含 student_answer、final_answer、selected_option</td></tr>
+<tr><td style="font-weight:600;color:#1e293b">grading.json</td><td>GPT (gpt-5.5-pro) 判题结果，含 judgement、reason、basis</td></tr>
+<tr><td style="font-weight:600;color:#1e293b">CSV 文件</td><td>人工整理的基准真值：学生实际答案 + 判题真值（对/错）</td></tr>
+</table>
+</div>
+</body></html>
